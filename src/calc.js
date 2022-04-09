@@ -1,6 +1,5 @@
-module.exports = { 
-    calculator: (val1, val2, operation) => {
-        console.log(val1,val2,parseInt(val1),parseInt(val2), parseInt(val1) == NaN , parseInt(val2) === NaN);
+export default function (val1, val2, operation) {
+        //console.log(val1,val2,parseInt(val1),parseInt(val2), parseInt(val1) == NaN , parseInt(val2) === NaN);
         if( parseInt(val1) === NaN && parseInt(val2) === NaN ) {
             return 'Error';
         }
@@ -26,4 +25,3 @@ module.exports = {
         
         return result;
     }
-}
