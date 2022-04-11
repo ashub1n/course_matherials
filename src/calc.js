@@ -1,27 +1,42 @@
-export default function (val1, val2, operation) {
-        //console.log(val1,val2,parseInt(val1),parseInt(val2), parseInt(val1) == NaN , parseInt(val2) === NaN);
-        if( parseInt(val1) === NaN && parseInt(val2) === NaN ) {
+export default class Calculator{
+    val1; 
+    val2;
+    mode;
+    result = 0;
+
+    constructor(val1, val2, mode = 'single'){
+        this.val1 = val1;
+        this.val2 = val2;
+        if (mode) {
+            this.mode = mode;
+        }
+    }
+
+    sum(val3){
+        if (this.mode === 'single') {
+            return this.val1 + this.val2;
+        }
+
+        this.result = val3 ? this.result + val3 : this.val1 + this.val2;
+        return this;
+    }
+
+    minus(){
+        return this.val1 - this.val2;
+    }
+
+    multiply(){
+        return this.val1 * this.val2;
+    }
+    
+    del(){
+        if (this.val2 === 0) {
             return 'Error';
         }
-       let result;
-        switch (operation) {
-            case 'sum':
-                result = val1 + val2;
-                break;
-            case 'minus':
-                result = val1 - val2;
-                break;
-            case 'multiply':
-                result = val1 * val2;
-                break;
-            case 'del':
-                if (val2 === 0) {
-                    return 'Error';
-                }
-                result = val1 / val2;
-                break;
-            
-        }
-        
-        return result;
+        return this.val1 / this.val2;
     }
+
+    res() {
+        return this.result;
+    }
+}
