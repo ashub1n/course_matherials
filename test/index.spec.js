@@ -1,7 +1,5 @@
 import calculator from "../src/calc.js";
-import assert from 'assert';
-//const {calculator} = require("../src/calc");
-//const assert = require("assert");
+import assert from 'assert'; 
  
 describe('Tasks', function () {
     describe('test', function () {

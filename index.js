@@ -8,10 +8,6 @@
 // static and super
 // Calculator  TDD
 
-
-
-
-
 // const mapChanged = [1,2,3,4].map((value, index)=>{
 //      return `${index}: ${value}`
 // })
@@ -156,40 +152,42 @@ describe('Tasks', function () {
 // console.log(aaaa);  
 
 
-// class Car {
-//     name = 'non set';
-//     price = 0;
-//     discount = 10;
-//     text;
+class Car {
+    name = 'non set';
+    #price = 0;
+    discount = 10;
+    text;
 
-//     static getStatic = 1000;
-//     static getStaticMethod (){
-//         return 'asdasdasd';
-//     };
+    static getStatic = 1000;
+    static getStaticMethod (){
+        return 'asdasdasd';
+    };
 
-//     constructor (name, price, discount) {
-//         this.name = name ;
-//         this.price = price;
-//         if( discount) {
-//             this.discount = discount;
-//         }  else {
-//             this.discount++;
-//         }
-//     }
+    constructor (name, price, discount) {
+        this.name = name ;
+        this.#price = price ;
+        if( discount) {
+            this.discount = discount;
+        }  else {
+            this.discount++;
+        }
+    }
 
-//     set content(value){
-//         if (!value){
-//              alert("Error");
-//         }
-//         this.text = value;
-//     }
+    set price(value){
+        if (value < 100){
+             alert("Error");
+        }
+        this.#price = value;
+    }
 
-//     get content() { 
-//         return Car.getStatic;
-//     }; 
+      get price() { 
+            // 
 
-//     info() { return `It's ${this.name} and his price is ${this.price} USD`}
-// }
+          return this.#price;
+      }; 
+
+    info() { return `It's ${this.name} and his price is ${this.price} USD`}
+}
 
 // class BMWCars extends Car {
 //     constructor (name, price) {
@@ -197,7 +195,8 @@ describe('Tasks', function () {
 //     }
 // }
 
-// const myCar = new Car('BMW', 100000);
+ const myCar = new Car('BMW', 100000);
+
 // const bmwCar = new BMWCars('X5', 1000000, 100, true);
 // console.log(myCar, bmwCar);
 
@@ -212,3 +211,27 @@ describe('Tasks', function () {
 // fucntion del 4 / 1 = 4
 // fucntion del 4 / 4 = 1
 // fucntion del 4 / 2 = 2
+
+// function weekIterator(array){
+//     let nextDayIndex = 0;
+
+//     return {
+//         next: function(){
+//             return nextDayIndex < array.length ?
+//                 {value: array[nextDayIndex++], done: false} :
+//                 {done: true};
+//         }
+//     }
+// }
+
+// let wDay = weekIterator(['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']);
+let arr = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+let step = 0;
+function getDay(){
+    return arr[step++];
+}
+ 
+console.log(getDay());
+console.log(getDay());
+console.log(getDay());
+console.log(getDay());
