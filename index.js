@@ -1,237 +1,30 @@
-// Iterators and Generators
-// Prototypes
-// Classes
-// Check types prototopes
-// Overide properties
-// Наследование
-// Инкапсуляция
-// static and super
-// Calculator  TDD
+//Термин	        Значение
+//Абсолютный путь	Абсолютный (или полный) путь начинается с буквы диска, за которой следует двоеточие, например, D:.
+//Расширение файла	Последовательность символов, добавляемых к имени файла и предназначенных для идентификации типа (формата) файла.
 
-// const mapChanged = [1,2,3,4].map((value, index)=>{
-//      return `${index}: ${value}`
-// })
-// console.log(mapChanged);
-// console.log('--------');
-// const arr = [1,2,3,4];
+// Commonjs
+// module.exports = {
+// calc: 
+//}
 
-// console.log(arr); 
-// for (let o in arr){
-//     console.log(o, arr[o])
-// }
-// for (let o in arr){
-//     console.log(o, arr[o])
-// }
+// let a = require('');
+// .   ../../../fold1/asd.sd
+// C:\users\username\file.txt
+// /users/username/file.txt
 
-// console.log('--------');
-// const arr2 = [1,2,3,4];
-// for (let o in arr){
-//     console.log(o, arr[o])
-// }
-// let i = 0;
-//  const mapChanged2  = [1,2,34,5].map(element => {
-//     i++;
-//      return element;
-//  });
-
- 
-// вопрос ? да : нет
-// function makeIterator(array){
-//     let nextIndex = 0;
-//     console.log("init");
-//     return {
-//        next: function(){
-//            return nextIndex < array.length ?
-//                {value: array[nextIndex++], done: false} :
-//                {done: true};
-//        }
-//     }
-// }
-
-// let it = makeIterator(['yo', 'ya', 'test']);
-
-//  function* test() {
-//     console.log('init');
-//     while(true) {
-//         console.log('init2');
-//         yield Math.random();
-//         console.log('init3');
-//         yield Math.random();
-//     } 
-//  };
-
-//  const a = test();
-
-///isEven(v) => !v%2 
-//isOdd(v) => !!isEven(v)
-
-//one -> two -> 50 -> 600000
+//https://www.w3schools.com/nodejs/ref_modules.asp
 
 
+//import defaultExport from "module-name";
+//import * as name from "module-name";
+//import { export } from "module-name";
+//import { export as alias } from "module-name";
+//import { export1 , export2 } from "module-name";
+//import { export1 , export2 as alias2 , […] } from "module-name";
+//import defaultExport, { export [ , […] ] } from "module-name";
+//import defaultExport, * as name from "module-name";
+//import "module-name";
+//import("/module-name.js").then(module => {…}) // Динамический импорт
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// npm i --save-dev mocha esm assert;
-// ./node_modules/.bin/mocha --require esm
-/*
-
-
-import assert from 'assert';
-import tasks from '../tasks/tasks'
-
-describe('Tasks', function () {
-    describe('#task_1', function () {
-        it('returns reverted array', function () {
-            assert.deepStrictEqual(tasks.task_1([5, 4, 3, 2, 1]), [1, 2, 3, 4, 5]);
-        });
-});*/
-
-// const callback =  function(){
-//     return `${this.name}`
-// };
- 
-
-// const aaa = [{
-//     "name": "tesr",
-//     "callback": function(){
-//         return `${this.name}`
-//     }
-// },  
-
-// ]
- 
-// console.log(aaa); 
- 
-// const Car = function (name, price) {
-//     this.name = name;
-//     this.price = price;
-// }
-// Car.prototype.info =  function  () {return `It's ${this.name} and his price is ${this.price} USD`};
-// Car.prototype.discount =  function () {
-//     this.price = this.price - 10000;
-
-//     return this.price
-// };
-
-// const list = [
-//     new Car('Ford', 100000), 
-//     new Car('BMW', 200000), 
-//     new Car('AUDI', 200000)
-// ];  
-
-// list.map(( value )=>{
-//     console.log(value.info());  
-// })
-
-// Array.prototype.map = () => 'test';
-
-// const aaaa = list.map(( value )=>{
-//     console.log(value.info());  
-// })
-
-
-// console.log(aaaa);  
-
-
-class Car {
-    name = 'non set';
-    #price = 0;
-    discount = 10;
-    text;
-
-    static getStatic = 1000;
-    static getStaticMethod (){
-        return 'asdasdasd';
-    };
-
-    constructor (name, price, discount) {
-        this.name = name ;
-        this.#price = price ;
-        if( discount) {
-            this.discount = discount;
-        }  else {
-            this.discount++;
-        }
-    }
-
-    set price(value){
-        if (value < 100){
-             alert("Error");
-        }
-        this.#price = value;
-    }
-
-      get price() { 
-            // 
-
-          return this.#price;
-      }; 
-
-    info() { return `It's ${this.name} and his price is ${this.price} USD`}
-}
-
-// class BMWCars extends Car {
-//     constructor (name, price) {
-//         super(name, price, 100);
-//     }
-// }
-
- const myCar = new Car('BMW', 100000);
-
-// const bmwCar = new BMWCars('X5', 1000000, 100, true);
-// console.log(myCar, bmwCar);
-
-
-// fucntion sum 1 +1 = 2
-// fucntion sum 2 + 2 = 4
-// fucntion minus 2 - 2 = 0
-// fucntion minus 4 - 2 = 2
-// fucntion multipl 4 * 2 = 8
-// fucntion multipl 4 * 1 = 4
-// fucntion multipl 4 * 0 = 0
-// fucntion del 4 / 1 = 4
-// fucntion del 4 / 4 = 1
-// fucntion del 4 / 2 = 2
-
-// function weekIterator(array){
-//     let nextDayIndex = 0;
-
-//     return {
-//         next: function(){
-//             return nextDayIndex < array.length ?
-//                 {value: array[nextDayIndex++], done: false} :
-//                 {done: true};
-//         }
-//     }
-// }
-
-// let wDay = weekIterator(['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']);
-let arr = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-let step = 0;
-function getDay(){
-    return arr[step++];
-}
- 
-console.log(getDay());
-console.log(getDay());
-console.log(getDay());
-console.log(getDay());
+//https://owasp.org/www-project-top-ten/

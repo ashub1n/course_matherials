@@ -1,3 +1,19 @@
+//let module1 = require('./module1/mod1.js'); 
+
+//import defaultExport from "./module1";
+
+//import { export } from "./module1";
+//import { export as alias } from "./module1";
+//import { export1 , export2 } from "./module1";
+//import { export1 , export2 as alias2 , […] } from "./module1";
+//import defaultExport, { export [ , […] ] } from "./module1";
+//import defaultExport, * as name from "./module1";
+//import "./module1";
+//import("/module1/index.js").then(module => {…}) // Динамический импорт
+
+
+
+
 export default class Calculator{
     val1; 
     val2;
@@ -28,7 +44,7 @@ export default class Calculator{
     multiply(){
         return this.val1 * this.val2;
     }
-    
+
     del(){
         if (this.val2 === 0) {
             return 'Error';

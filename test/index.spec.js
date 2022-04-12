@@ -12,7 +12,7 @@ describe('Tasks', function () {
             assert.equal((new calculator(1,1)).sum(),2);
         });
 
-        it('2+2=2', function () {
+        it('2+2=4', function () {
             //(new calculator(2,2)).sum()
             // let a = new calculator(2,2);
             // a.sum();
@@ -72,6 +72,6 @@ describe('Tasks', function () {
             let obj = (new calculator(1,1, 'multiple'));
             obj =  obj.sum().sum(1).sum(1).sum(2);
             assert.equal(obj.res(),6)
-        }); 
+        });  
     });
 });
