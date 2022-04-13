@@ -21,19 +21,34 @@ export default class Calculator{
         return this;
     }
 
-    minus(){
-        return this.val1 - this.val2;
+    minus(val3){
+        if (this.mode === 'single') {
+            return this.val1 - this.val2;
+        }
+
+        this.result = val3 ? this.result - val3 : this.val1 - this.val2;
+        return this;
     }
 
     multiply(){
-        return this.val1 * this.val2;
+        if (this.mode === 'single') {
+            return this.val1 * this.val2;
+        }
+
+        this.result = val3 ? this.result * val3 : this.val1 * this.val2;
+        return this;
     }
     
     del(){
         if (this.val2 === 0) {
             return 'Error';
         }
-        return this.val1 / this.val2;
+        if (this.mode === 'single') {
+            return this.val1 / this.val2;
+        }
+
+        this.result = val3 ? this.result / val3 : this.val1 / this.val2;
+        return this;
     }
 
     res() {

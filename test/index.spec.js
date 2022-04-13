@@ -73,5 +73,69 @@ describe('Tasks', function () {
             obj =  obj.sum().sum(1).sum(1).sum(2);
             assert.equal(obj.res(),6)
         }); 
+        it('2 + 2 + 2 + 2 + 2', function () {
+            let obj = (new calculator(2,2, 'multiple'));
+            assert.equal(obj.res(),10)
+        }); 
+        it('3 + 3 + 3 + 3 + 3', function () {
+            let obj = (new calculator(3,3, 'multiple'));
+            obj =  obj.sum().sum(3).sum(3).sum(3);
+            assert.equal(obj.res(),15)
     });
+});
+});
+
+
+describe('memory', function () {
+    it('4 - 1 - 1 - 1 - 1', function () {
+        let obj = (new calculator(4,1, 'multiple'));
+        obj =  obj.minus().minus(1).minus(1).minus(1);
+        assert.equal(obj.res(),0)
+    }); 
+    it('8 - 2 - 1 - 1 - 1', function () {
+        let obj = (new calculator(8,2, 'multiple'));
+        obj =  obj.minus().minus(1).minus(1).minus(1);
+        assert.equal(obj.res(),3)
+    }); 
+    it('12 - 3 - 2 - 1 - 1', function () {
+        let obj = (new calculator(12,3, 'multiple'));
+        obj =  obj.minus().minus(2).minus(1).minus(1);
+        assert.equal(obj.res(),5)
+});
+});
+
+describe('memory', function () {
+    it('4 * 2  * 1 * 2', function () {
+        let obj = (new calculator(4,2, 'multiple'));
+        obj =  obj.multiply().multiply(1).multiply(2);
+        assert.equal(obj.res(),16)
+    }); 
+    it('2 * 2 * 2 * 2 * 2', function () {
+        let obj = (new calculator(2,2, 'multiple'));
+        obj =  obj.multiply().multiply(2).multiply(2).multiply(2);
+        assert.equal(obj.res(),32)
+    }); 
+    it('1 * 2 * 3 * 4 * 5', function () {
+        let obj = (new calculator(1,2, 'multiple'));
+        obj =  obj.multiply().multiply(3).multiply(4).multiply(5);
+        assert.equal(obj.res(),120)
+});
+});
+
+describe('memory', function () {
+    it('16 / 2  / 1 / 2', function () {
+        let obj = (new calculator(16,2, 'multiple'));
+        obj =  obj.del().del(1).del(2);
+        assert.equal(obj.res(),4)
+    }); 
+    it('6 / 2 / 1 / 1', function () {
+        let obj = (new calculator(6,2, 'multiple'));
+        obj =  obj.del().del(1).del(1);
+        assert.equal(obj.res(),3)
+    }); 
+    it('16 / 2 / 2 / 0', function () {
+        let obj = (new calculator(1,2, 'multiple'));
+        obj =  obj.del().del(2).del(0);
+        assert.equal(obj.res(),'Error')
+});
 });
