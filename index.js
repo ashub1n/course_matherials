@@ -1,30 +1,18 @@
-//Термин	        Значение
-//Абсолютный путь	Абсолютный (или полный) путь начинается с буквы диска, за которой следует двоеточие, например, D:.
-//Расширение файла	Последовательность символов, добавляемых к имени файла и предназначенных для идентификации типа (формата) файла.
+// JAN 01 1970. (UTC)
+//2022-04-13T15:10:17.314Z
 
-// Commonjs
-// module.exports = {
-// calc: 
-//}
-
-// let a = require('');
-// .   ../../../fold1/asd.sd
-// C:\users\username\file.txt
-// /users/username/file.txt
-
-//https://www.w3schools.com/nodejs/ref_modules.asp
-
-
-//import defaultExport from "module-name";
-//import * as name from "module-name";
-//import { export } from "module-name";
-//import { export as alias } from "module-name";
-//import { export1 , export2 } from "module-name";
-//import { export1 , export2 as alias2 , […] } from "module-name";
-//import defaultExport, { export [ , […] ] } from "module-name";
-//import defaultExport, * as name from "module-name";
-//import "module-name";
-//import("/module-name.js").then(module => {…}) // Динамический импорт
+const date = new Date();
+date.setUTCDate(1);
+date.setUTCFullYear(2000);
+date.setUTCMonth(0);
+date.setUTCHours(0);
+date.setUTCMinutes(0);
+date.setUTCSeconds(0);
+date.setUTCMilliseconds(0);
+// 04-12-2022
+const date2 =new Date(946684800000);
+const date3 =new Date(2000,0,1,2,0,0,0);
+console.log(date.toISOString(), date2.toISOString(), date.getTime() === date2.getTime() );
 
 
-//https://owasp.org/www-project-top-ten/
+console.log(date.toLocaleDateString('ua'));
