@@ -4,10 +4,22 @@ import routes from './routes';
 const server = http.createServer();
 
 // Listen to the request event
-server.on('request', (request, res) => {
+server.on('request', async (request, res) => {
     const url = request.url;
     const method = request.method;
+    const test = await (new Promise((resolve, reject)=>{
+        let data = '';
+        request.on('data', chunk => {
+            data += chunk;
+        })
+        request.on('end', () => {
+            resolve(JSON.parse(data)); 
+        })
+    }));
+   
+    request.parsedBody = test;
 
+    //console.log('first', data);
     //https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
     let [path, ...queryVars] = url.split('?');
    
@@ -17,10 +29,8 @@ server.on('request', (request, res) => {
    }
     // 
     request.customPathTest = path;
-    request.customQueryVars = queryVars?.split('&').reduce((sum, v)=>{
-            
+    request.customQueryVars = queryVars?.split('&').reduce((sum, v)=>{  
             let [key, ...value] = v.split('=');
-           
             if (! key){
                 return "Error";
             }
@@ -28,12 +38,9 @@ server.on('request', (request, res) => {
                 value = value.join('=');
               }
             sum[key] = value;
-
             return sum;
         }, {});
-   
-   
-    
+       
     if (typeof request.queryVars === 'string') {
         res.writeHead(400, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({
@@ -50,7 +57,16 @@ server.on('request', (request, res) => {
         return;
     }   
   
-    return routes[request.customPathTest].handler(request, res);
+    try {
+        return routes[request.customPathTest].handler(request, res);
+    }catch (e) {
+        console.log('Main error catch', e);
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+            error: 'Server now is on maintance work'
+        }));
+        return;
+    }
 });
 
 server.listen(8000, ()=>{
