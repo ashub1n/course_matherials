@@ -1,189 +1,101 @@
-// Call stack
-// event loop
-// timers
-// callback hell
-// Promises
-// then catch
-// await asynk
 /*
-
-onGetUserInfo(1, (userData) => {
-    onGetPermissions(userData, (permissions, userData) => {
-        makePost(permissions, userData);
-    });
-});
-Рефактор:
-
-getUserInfo(1)
-    .then(userData => { return getPermissions(userData); })
-    .then(([permissions, userData]) => { makePost(permissions, userData); })
-    .catch(console.log("err"));
+    Debug
+    Profiling
+    Errors
+    recursive fuctions
+    Complite crud
+    make http request from server
 
 
-function addFrom(a){
-    return new Promise(resolve => {
-        plusOneAfter1Second(a).then((b) => {
-            plusOneAfter1Second(b).then((c) => {
-                plusOneAfter1Second(c).then((d) => {
-                    resolve(console.log([a, b, c, d]));
-                })
-            })
-        })
-    });
+
+
+
+// sorted from a to z
+// [1,2,3,4,5,6,7,8,9,10]
+
+
+
+
+let iterativeFunction = function (arr, x) {
+  
+    let start=0, end=arr.length-1;
+         
+    // Iterate while start not meets end
+    while (start<=end){
+ 
+        // Find the mid index
+        let mid=Math.floor((start + end)/2);
+  
+        // If element is present at mid, return True
+        if (arr[mid]===x) return true;
+ 
+        // Else look in left or right half accordingly
+        else if (arr[mid] < x)
+             start = mid + 1;
+        else
+             end = mid - 1;
+    }
+  
+    return false;
 }
-console.log(addFrom(6)); //[6, 7, 8, 9]
 
 
-plusOneAfter1Second(6)
-    .then(n1 => plusOneAfter1Second(n1))
-    .then(n2 => plusOneAfter1Second(n2))
-    .then(n3 => plusOneAfter1Second(n3))
-    .then((n1, n2, n3) => console.log([n1, n2, n3])) //[10, undefined, u
-
-async function chainAsync(n) {
-  const a = await plusOneAfter1Second(n);
-  const b = await plusOneAfter1Second(a);
-  const c = await plusOneAfter1Second(b);
-  return [n, a, b, c];
-}
 
 
 */
 
 
-console.log('Start');
-
-// const main = () => {
-//     console.log('Start main');
-//     const fun1 = (a) => {
-//         console.log('Start fun1');
-//         const fun2 = (a) => {
-//             console.log('Start fun2');
-//             const fun3 = (a) => {
-//                 console.log('Start fun3');
-//                 return a * a;
-//             }
-//             return fun3(a);
-//         }
-//         const b = fun2(a);
-//         console.log('Start fun1 call 2');
-//         return  b ;
-        
+// function multToMany(value){
+//     let result = value * 2;
+//     if (result > 0) {
+//         result = multToMany(result);
 //     }
-//     console.log(fun1(2));
+//     return result;
 // }
+// multToMany(1);
 
-// main();
-// let i = 0; 
-// let int = setInterval(() => {
-//     console.log('before Finish int ');
 
-//     if (i > 5){
-//         clearInterval(int);
-//     }
-//     i++;
-// }, 1000);
+const arrayTest = [];
+for (let i = 0; i < 10000000; i++){
+    arrayTest.push(i);
+}
 
- 
-// console.log('before Finish');
+let count = 0
 
-// setTimeout(() => {
-//     console.log('Try to sennd request');
-//     const x = {};
-//     setTimeout(() => {
-//         console.log('Try to send response');
-//         x.test = true;
-//         x.finished = true;
-//         console.log(x);   
-//     }, 2000);
-//     console.log(x);   
-
-// }, 1000);
- 
-// console.log('File end');   
-
-// const p = new Promise((resolve, reject)=>{
-    
-//         setTimeout(() => {
-//             console.log('Try to send request');
-//             const x = {};
-//             setTimeout(() => {
-//                 try {
-//                     console.log('Try to send response');
-//                     x.test = true;
-//                     x.finished = true;
-//                     const rr = Math.random()*10;
-//                     console.log('rr', rr);
-//                     if (rr < 5) {
-//                         throw  'error from async code';
-//                     } 
-                    
-//                     console.log(x); 
-//                     resolve(x);  
-//                 } catch (e) {
-//                     console.log(e);
-//                     reject('Error' + e);
-//                 }
-//             }, 2000);
-//         }, 1000);
+let iterativeFunction = function (arr, x) {
   
-// });
-
-
-// const p2 = new Promise((resolve, reject)=>{
-    
-//     setTimeout(() => {
-//         console.log('Try to send request');
+    let start=0, end=arr.length-1;
+         
+    // Iterate while start not meets end
+    while (start<=end){
+        count++;
        
-//         setTimeout(() => {
-//             try {
-//                 console.log('Try to send response');
-//                 const x = {};
-//                 x.test = true;
-//                 x.finished = true;
-                
-//                 x.rr = Math.random()*10;
-//                 x.uuid = Date.now();
-//                 console.log('rr', x.rr);
-//                 if ( x.rr < 5) {
-//                     throw  'error from async code';
-//                 } 
-                
-//                 console.log(x); 
-//                 resolve(x);  
-//             } catch (e) {
-//                 console.log(e);
-//                 reject('Error' + e);
-//             }
-//         }, 2000);
-//     }, 1000);
+        // Find the mid index
+        let mid=Math.floor((start + end)/2);
+        console.log(mid, start, end);
+        // If element is present at mid, return True
+        if (arr[mid]===x) return true;
+ 
+        // Else look in left or right half accordingly
+        else if (arr[mid] < x)
+             start = mid + 1;
+        else
+             end = mid - 1;
+    }
+  
+    return false;
+}
 
-// });
+//let res = iterativeFunction(arrayTest, 9999998);
+function t(val){
+    for(let j = 0; j < arrayTest.length; j++){
+        if (val == arrayTest[j]) return true;
+    }
+    return false;
 
-
-// (async ()=>{
-//     try {
-//         console.log('before await');
-//         const [v1,v2 ] = await Promise.all([p,p2]);
-//         // 
-//         let result = await p;
-//         let result2 = await p2;
-//         console.log('await Promise is fullfilled', result === v1, result2 === v2);
-//     } catch (e) {
-//         console.log('await error', e);
-//     }
     
-// })()
-
-
-// let testVar = null;
-// p.then((value)=>{
-//     console.log('Promise is fullfilled', value);
-//     testVar = value;
-// }).then(()=>{
-//     console.log('testVar is ', testVar);
-// }).catch((e)=>{
-//     console.log('error is ', e);
-// }).finally(()=>{
-//     console.log('Finally');
-// })
+}
+console.time('binary');
+console.log(t(9999998));
+//console.log('count of iterations:', count, res);
+console.timeEnd('binary');

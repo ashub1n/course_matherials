@@ -1,5 +1,8 @@
 import http from 'http';
 import routes from './routes';
+import PageNotFound from './errors/PageNotFound';
+import ValidationError from './errors/ValidationError';
+
 // Create a local server to receive data from
 const server = http.createServer();
 
@@ -7,17 +10,18 @@ const server = http.createServer();
 server.on('request', async (request, res) => {
     const url = request.url;
     const method = request.method;
-    const test = await (new Promise((resolve, reject)=>{
+    const body = await (new Promise((resolve, reject)=>{
         let data = '';
         request.on('data', chunk => {
             data += chunk;
         })
         request.on('end', () => {
-            resolve(JSON.parse(data)); 
+            data = data.trim();
+            resolve(data ? JSON.parse(data): {}); 
         })
     }));
    
-    request.parsedBody = test;
+    request.parsedBody = body;
 
     //console.log('first', data);
     //https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
@@ -49,7 +53,18 @@ server.on('request', async (request, res) => {
         return;
     }
     
-    if (!routes[request.customPathTest] || routes[request.customPathTest].method !== method) {
+    // if request.customPathTest !== user/asdasdasdasdasd
+    // dynamic router
+    // /users/asdasdasdasdasd => /users/${userId}
+    // userId => asdasdasdasdasd
+    if (request.customPathTest.startsWith('/users/') && request.customPathTest.length > 7) {
+        request.queryParams = {
+            userId: request.customPathTest.slice(7)
+        };
+        request.customPathTest = '/users/:userId';
+    }
+
+    if (!routes[request.customPathTest] || !routes[request.customPathTest][method]) {
         res.writeHead(404, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({
             data: 'Page is not found'
@@ -58,14 +73,27 @@ server.on('request', async (request, res) => {
     }   
   
     try {
-        return routes[request.customPathTest].handler(request, res);
-    }catch (e) {
-        console.log('Main error catch', e);
-        res.writeHead(500, { 'Content-Type': 'application/json' });
+        return routes[request.customPathTest][method].handler(request, res);
+    } catch (e) {
+        console.log(typeof e);
+
+        let httpCode = 500;
+        let message = 'Server now is on maintance work';
+        
+        if (e instanceof PageNotFound){
+            httpCode = 404;
+            message = 'Page is not found';
+        }
+        if (e instanceof ValidationError){
+            httpCode = 400;
+            message = 'Body parameters are incorrect';
+        }
+
+        res.writeHead(httpCode, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({
-            error: 'Server now is on maintance work'
+            error: message
         }));
-        return;
+        return; 
     }
 });
 
@@ -75,7 +103,7 @@ server.listen(8000, ()=>{
 
 server.on('error', (e)=>{
     console.log(e);
-
+ 
     //Restart server
 })
 
