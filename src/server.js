@@ -2,7 +2,7 @@ import http from 'http';
 import routes from './routes';
 import PageNotFound from './errors/PageNotFound';
 import ValidationError from './errors/ValidationError';
-
+import mongose from './database/mongose';
 // Create a local server to receive data from
 const server = http.createServer();
 
@@ -96,10 +96,12 @@ server.on('request', async (request, res) => {
         return; 
     }
 });
-
+ 
 server.listen(8000, ()=>{
     console.log('The server had been runned on http://localhost:8000');
 });
+ 
+
 
 server.on('error', (e)=>{
     console.log(e);

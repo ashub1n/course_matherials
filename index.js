@@ -1,101 +1,117 @@
+// import {performance} from 'perf_hooks';
+// KIS - keep it simple
 /*
-    Debug
-    Profiling
-    Errors
-    recursive fuctions
-    Complite crud
+    big o
     make http request from server
-
-
-
-
-
-// sorted from a to z
-// [1,2,3,4,5,6,7,8,9,10]
-
-
-
-
-let iterativeFunction = function (arr, x) {
-  
-    let start=0, end=arr.length-1;
-         
-    // Iterate while start not meets end
-    while (start<=end){
- 
-        // Find the mid index
-        let mid=Math.floor((start + end)/2);
-  
-        // If element is present at mid, return True
-        if (arr[mid]===x) return true;
- 
-        // Else look in left or right half accordingly
-        else if (arr[mid] < x)
-             start = mid + 1;
-        else
-             end = mid - 1;
-    }
-  
-    return false;
-}
-
-
-
-
+    open files in node 
+    streems
+    process files from request
 */
 
+//O(1)
 
-// function multToMany(value){
-//     let result = value * 2;
-//     if (result > 0) {
-//         result = multToMany(result);
-//     }
-//     return result;
-// }
-// multToMany(1);
+// const smArr = [5, 3, 2, 35, 2];
 
-
-const arrayTest = [];
-for (let i = 0; i < 10000000; i++){
-    arrayTest.push(i);
-}
-
-let count = 0
-
-let iterativeFunction = function (arr, x) {
-  
-    let start=0, end=arr.length-1;
-         
-    // Iterate while start not meets end
-    while (start<=end){
-        count++;
-       
-        // Find the mid index
-        let mid=Math.floor((start + end)/2);
-        console.log(mid, start, end);
-        // If element is present at mid, return True
-        if (arr[mid]===x) return true;
+// const bigArr = [5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2,5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2];
  
-        // Else look in left or right half accordingly
-        else if (arr[mid] < x)
-             start = mid + 1;
-        else
-             end = mid - 1;
-    }
+
+
+// const a1 = performance.now();
+// smArr.push(27);
+// const a2 = performance.now();
+// console.log(`Time: ${a2 - a1}`); // Less than 1 Millisecond
+
+
+// const b1 = performance.now();
+// bigArr.push(27);
+// const b2 = performance.now();
+// console.log(`Time: ${b2 - b1}`); // Less than 1 Millisecond
+
+
+
+//O(n)
+
+
+// const a1 = performance.now();
+// smArr.forEach(item => console.log(item));
+// const a2 = performance.now();
+// console.log(`Time: ${a2 - a1}`); // 3 Milliseconds
+
+// const b1 = performance.now();
+// bigArr.forEach(item => console.log(item));
+// const b2 = performance.now();
+// console.log(`Time: ${b2 - b1}`); // 13 Milliseconds
+
+
+//O(n^2)
+
+// const a1 = performance.now();
+// let arr2 = smArr;
+// smArr.forEach(() => {
+//     arr2.forEach(item => console.log(item));
+// });
+// const a2 = performance.now();
+// console.log(`Time: ${a2 - a1}`); // 8 Milliseconds
+
+
+// const b1 = performance.now();
+// let arr2 = bigArr;
+// bigArr.forEach(() => {
+//     arr2.forEach(item => console.log(item));
+// });
+// const b2 = performance.now();
+// console.log(`Time: ${b2 - b1}`); // 307 Milliseconds
+
+
+//O(log n)
+//[1,3,2,5,6,7,4 ]
+// const sort = arr => {
+//     //console.log(arr);
+//     if (arr.length < 2) return arr;
   
-    return false;
-}
+//     let pivot = arr[0];
+//     let left = [];
+//     let right = [];
+  
+//     for (let i = 1, total = arr.length; i < total; i++) {
+//       if (arr[i] < pivot) left.push(arr[i]);
+//       else right.push(arr[i]);
+//     };
+//     return [
+//       ...sort(left),
+//       pivot,
+//       ...sort(right)
+//     ];
+//   };
 
-//let res = iterativeFunction(arrayTest, 9999998);
-function t(val){
-    for(let j = 0; j < arrayTest.length; j++){
-        if (val == arrayTest[j]) return true;
-    }
-    return false;
+//   console.time('performance');
+//   let a = sort(bigArr); 
+//   console.timeEnd('performance');
 
-    
-}
-console.time('binary');
-console.log(t(9999998));
-//console.log('count of iterations:', count, res);
-console.timeEnd('binary');
+// let b = null;// 0 Milliseconds
+// //sort(bigArr); // 1 Millisecond
+
+
+// O(n!)
+ 
+//  const factorial = n => {
+//   let num = n;
+
+//   if (n === 0) return 1
+//   for (let i = 0; i < n; i++) {
+//     num = n * factorial(n - 1);
+//   };
+
+//   return num;
+// };
+
+// const a1 = performance.now();
+// factorial(15); 
+//  const a2 = performance.now();
+//  console.log(`Time: ${a2 - a1}`); 
+ 
+ // 8 Milliseconds
+// 2 Milliseconds
+//factorial(5); // 3 Milliseconds
+//factorial(10); // 85 Milliseconds
+//factorial(12); //  11,942 Milliseconds
