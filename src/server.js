@@ -1,119 +1,48 @@
-import http from 'http';
 import routes from './routes';
+import express from 'express'
 import PageNotFound from './errors/PageNotFound';
 import ValidationError from './errors/ValidationError';
-import mongose from './database/mongose';
-// Create a local server to receive data from
-const server = http.createServer();
+import Unauthorized from './errors/Unauthorized';
 
-// Listen to the request event
-server.on('request', async (request, res) => {
-    const url = request.url;
-    const method = request.method;
-    const body = await (new Promise((resolve, reject)=>{
-        let data = '';
-        request.on('data', chunk => {
-            data += chunk;
-        })
-        request.on('end', () => {
-            data = data.trim();
-            resolve(data ? JSON.parse(data): {}); 
-        })
-    }));
+const app = express()
+app.use(express.json()) // for parsing application/json
+app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
+const port = 8000
+const keys = Object.keys(routes);
+
+for(let i =0; i < keys.length; i++){
+    const route = keys[i];
+    const methods = Object.keys(routes[route]);
    
-    request.parsedBody = body;
-
-    //console.log('first', data);
-    //https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
-    let [path, ...queryVars] = url.split('?');
-   
-
-   if ( typeof queryVars !== 'string' ) {
-     queryVars = queryVars.join('?');
-   }
-    // 
-    request.customPathTest = path;
-    request.customQueryVars = queryVars?.split('&').reduce((sum, v)=>{  
-            let [key, ...value] = v.split('=');
-            if (! key){
-                return "Error";
-            }
-            if (  typeof value !== 'string' ) {
-                value = value.join('=');
-              }
-            sum[key] = value;
-            return sum;
-        }, {});
-       
-    if (typeof request.queryVars === 'string') {
-        res.writeHead(400, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({
-            data: 'Query parameters is invalid. Please specify key for all properties.'
-        }));
-        return;
-    }
+    for (let j =0; j < methods.length; j++) {
+        const m = methods[j].toLowerCase();
+        app[m](route, routes[route][methods[j]].handler)
+    } 
+}
+app.use('/static', express.static('tmp'));
+app.use(function(e, req, res, next) {
+    console.error(e.stack);
+    let httpCode = 500;
+    let message = 'Server now is on maintance work';
     
-    // if request.customPathTest !== user/asdasdasdasdasd
-    // dynamic router
-    // /users/asdasdasdasdasd => /users/${userId}
-    // userId => asdasdasdasdasd
-    if (request.customPathTest.startsWith('/users/') && request.customPathTest.length > 7) {
-        request.queryParams = {
-            userId: request.customPathTest.slice(7)
-        };
-        request.customPathTest = '/users/:userId';
+    if (e instanceof PageNotFound){
+        httpCode = 404;
+        message = 'Page is not found';
     }
 
-    if (!routes[request.customPathTest] || !routes[request.customPathTest][method]) {
-        res.writeHead(404, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({
-            data: 'Page is not found'
-        }));
-        return;
-    }   
-  
-    try {
-        return routes[request.customPathTest][method].handler(request, res);
-    } catch (e) {
-        console.log(typeof e);
-
-        let httpCode = 500;
-        let message = 'Server now is on maintance work';
-        
-        if (e instanceof PageNotFound){
-            httpCode = 404;
-            message = 'Page is not found';
-        }
-        if (e instanceof ValidationError){
-            httpCode = 400;
-            message = 'Body parameters are incorrect';
-        }
-
-        res.writeHead(httpCode, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({
-            error: message
-        }));
-        return; 
+    if (e instanceof Unauthorized){
+        httpCode = 401;
+        message = 'Unauthorized';
     }
-});
- 
-server.listen(8000, ()=>{
-    console.log('The server had been runned on http://localhost:8000');
-});
- 
+    if (e instanceof ValidationError){
+        httpCode = 400;
+        message = 'Body parameters are incorrect';
+    }
+    res.status(httpCode).json({error: message});
+  });
 
 
-server.on('error', (e)=>{
-    console.log(e);
- 
-    //Restart server
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
 })
-
-
-// Restfull API 
-// REST API
-
-//
-//test1=test1val
-//&
-//test2=test2val
