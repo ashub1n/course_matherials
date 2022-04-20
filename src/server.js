@@ -1,13 +1,38 @@
 import routes from './routes';
 import express from 'express'
+import cors from 'cors';
 import PageNotFound from './errors/PageNotFound';
 import ValidationError from './errors/ValidationError';
 import Unauthorized from './errors/Unauthorized';
+import {jwtSalt} from './configs';
+import jwt from 'jsonwebtoken';
+import redis from './utils/redis';
 
 const app = express()
+app.use(cors({
+    origin: "http://site:*",
+    methods: "GET,PATCH,POST,DELETE",
+})) 
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+app.use(async(req, res, next)=>{
+    if(req.originalUrl === '/login'){
+        return next();
+    }
+    // Bearer dlfkjbsdfjbhsdjfbsjdbfjksdhf
+    if(!req.headers?.authorization){
+        return next(new Unauthorized());
+    }
+    const token = req.headers?.authorization.split(' ')[1];
+    jwt.verify(token, jwtSalt, (err, user)=>{
+        if (err) {
+            return next(new Unauthorized());
+        }
 
+        next();
+    });
+    
+});
 const port = 8000
 const keys = Object.keys(routes);
 
@@ -43,6 +68,7 @@ app.use(function(e, req, res, next) {
   });
 
 
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`Example app listening on port ${port}`)
+  await redis.connect();
 })

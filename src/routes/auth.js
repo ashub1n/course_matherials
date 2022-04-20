@@ -1,6 +1,6 @@
 import UserModel from '../database/models/User';
 import Unauthorized from '../errors/Unauthorized';
-import {hash} from '../utils';
+import {hash, generateAccessToken} from '../utils';
 
 //https://developer.mozilla.org/ru/docs/Web/HTTP/Status
 let data = {
@@ -14,7 +14,9 @@ let data = {
                 if (! result){
                     return next(new Unauthorized());
                 }
-                res.json({result}) 
+                res.json({result, auth:{
+                   token: generateAccessToken(result.toJSON) 
+                }}) 
             },
         },
     },

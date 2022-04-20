@@ -1,10 +1,36 @@
-import UserModel from '../database/models/User';
+import UserModel from '../database/models/User'; 
+import redis from '../utils/redis';
 //https://developer.mozilla.org/ru/docs/Web/HTTP/Status
 let data = {
     '/users' : {
         'GET': {
-            handler: async (req, res) => {    
-                res.json({data: await (UserModel.find({}))});
+            handler: async (req, res, next) => {   
+                //conect to redis
+                let users = [];
+                try{
+               
+             
+          
+                // check if list of users already in the cache
+                redis.get('users', async (err, item)=>{
+                    if (err){
+                        return next(err);
+                    }
+                    if (item) {
+                        users = JSON.parse(item);
+                    }
+                    if (!item){
+                        users =  await UserModel.find({});
+                        const cache = JSON.stringify(users)
+                        redis.set('users', cache);
+                    }
+                    res.json({data: users});
+                });
+                
+            }catch(e){
+                const a = '';
+            }
+               
             },
         },
         'POST': {
