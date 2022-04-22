@@ -6,7 +6,7 @@ import ValidationError from './errors/ValidationError';
 import Unauthorized from './errors/Unauthorized';
 import {jwtSalt} from './configs';
 import jwt from 'jsonwebtoken';
-import redis from './utils/redis';
+import redis from './utils/redis';  
 
 const app = express()
 app.use(cors({
@@ -46,11 +46,12 @@ for(let i =0; i < keys.length; i++){
     } 
 }
 app.use('/static', express.static('tmp'));
+app.use('*',(req, res, next)=>next(new PageNotFound()))
 app.use(function(e, req, res, next) {
     console.error(e.stack);
     let httpCode = 500;
     let message = 'Server now is on maintance work';
-    
+    let details;
     if (e instanceof PageNotFound){
         httpCode = 404;
         message = 'Page is not found';
@@ -60,11 +61,12 @@ app.use(function(e, req, res, next) {
         httpCode = 401;
         message = 'Unauthorized';
     }
-    if (e instanceof ValidationError){
+    if (e instanceof ValidationError || e.name === "ValidationError"){
         httpCode = 400;
         message = 'Body parameters are incorrect';
+        details = e.message;
     }
-    res.status(httpCode).json({error: message});
+    res.status(httpCode).json({error: message, details});
   });
 
 

@@ -18,6 +18,8 @@
     "mongoose": "^6.3.0",
     "nodemon": "^2.0.15",
     "redis": "^4.0.6",
+    "socket.io": "^4.4.1",
+    "socket.io-client": "^4.4.1",
     "uuid": "^8.3.2"
   }
 }

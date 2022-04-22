@@ -8,35 +8,36 @@ let data = {
                 //conect to redis
                 let users = [];
                 try{
-               
-             
-          
+
                 // check if list of users already in the cache
-                redis.get('users', async (err, item)=>{
-                    if (err){
-                        return next(err);
-                    }
-                    if (item) {
-                        users = JSON.parse(item);
-                    }
-                    if (!item){
-                        users =  await UserModel.find({});
-                        const cache = JSON.stringify(users)
-                        redis.set('users', cache);
-                    }
-                    res.json({data: users});
-                });
-                
-            }catch(e){
-                const a = '';
-            }
+                    redis.get('users', async (err, item)=>{
+                        if (err){
+                            return next(err);
+                        }
+                        if (item) {
+                            users = JSON.parse(item);
+                        }
+                        if (!item){
+                            users =  await UserModel.find({});
+                            const cache = JSON.stringify(users)
+                            redis.set('users', cache);
+                        }
+                        res.json({data: users});
+                    });
+                }catch(e){
+                    const a = '';
+                }
                
             },
         },
         'POST': {
-            handler: async (req, res) => {  
-                let result = await UserModel.create(req.body)
-                res.json({result}) 
+            handler: async (req, res, next) => {  
+                try{
+                    let result = await UserModel.create(req.body)
+                    res.json({result}) 
+                } catch(e){
+                    next(e)
+                }
             },
         },
     },
@@ -49,10 +50,14 @@ let data = {
             },
         },
         'PATCH': {
-            handler: async (req, res) => {
-                let data = await UserModel.findOne({id: req.params?.userId}) ;
-                data.set(req.body).save(); 
-                res.status(201).json({ data});
+            handler: async (req, res, next) => {
+                try{
+                    let data = await UserModel.findOne({id: req.params?.userId}) ;
+                    await data.set(req.body).save(); 
+                    res.status(201).json({ data});
+                } catch(e){
+                    next(e)
+                }
             },
         },
         'DELETE': {
