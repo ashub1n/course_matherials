@@ -7,4 +7,17 @@ export const redisConf = {
     password: process.env.REDIS_PASSWORD,
     legacyMode: true 
 }
-export default {jwtSalt, redisConf}
+export const mailConfig = {
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
+    username: process.env.SMTP_USERNAME,
+    password: process.env.SMTP_PASS, 
+};
+
+export const queueConfig = {
+    host: process.env.CLOUDAMQP_URL,
+    user: process.env.CLOUDAMQP_USER,
+    password: process.env.CLOUDAMQP_PASS,
+};
+
+export default {jwtSalt, redisConf, mailConfig, queueConfig}
