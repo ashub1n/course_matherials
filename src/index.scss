@@ -1,0 +1,29 @@
+$primaty: 'black';
+
+
+html{
+    head{
+        link{
+            a{
+                color: $primaty
+            }
+        }
+    }
+    body{
+        div.one{
+            a {
+                color: primaty
+            }
+        }
+        div.two{
+            a {
+                color: white
+            }
+        }
+    }
+}
+
+
+html>head>link>a{ color: #000;}
+html body div.one a{ color: #000;}
+html body div.two a{ color: white;}

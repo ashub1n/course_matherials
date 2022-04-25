@@ -1,0 +1,11 @@
+.left,.right{
+    width: 49%;
+    display: inline-block;
+    float: left;
+}
+#id{
+    color: red;
+}
+.class1{
+    color: green!important;
+}
